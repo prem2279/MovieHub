@@ -46,10 +46,10 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let releaseDateLabel: UILabel = {
+    private let releaseYearLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
         label.textAlignment = .right
         return label
@@ -99,7 +99,7 @@ extension MovieTableViewCell {
         movieTitle.text = movie.originalTitle
         genreLabel.text = movie.genreIds .map { String($0) }.joined(separator: " • ")
         ratingLabel.text = "⭐ \(movie.voteAverage)"
-        releaseDateLabel.text = movie.releaseDate
+        releaseYearLabel.text = movie.releaseYear
         
         UIImage().downloadImage(for: movie.posterPath, completion: {
             [weak self] result in
@@ -133,7 +133,7 @@ extension MovieTableViewCell {
         
         cellStackView.addArrangedSubview(movieImage)
         cellStackView.addArrangedSubview(movieInfoStackView)
-        cellStackView.addArrangedSubview(releaseDateLabel)
+        cellStackView.addArrangedSubview(releaseYearLabel)
         
         movieInfoStackView.addArrangedSubview(movieTitle)
         movieInfoStackView.addArrangedSubview(genreLabel)
@@ -144,6 +144,6 @@ extension MovieTableViewCell {
         
         pinAllCorners(child: cellStackView, parent: contentView, top: 20, leading: 20, trailing: -20)
         setWidthHeightConstraints(element: movieImage, width: 75, height: 75)
-        setWidthHeightConstraints(element: releaseDateLabel, width: 100)
+        setWidthHeightConstraints(element: releaseYearLabel, width: 100)
     }
 }

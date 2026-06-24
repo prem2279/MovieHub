@@ -42,6 +42,12 @@ struct Movie: Decodable {
         case video
         case voteCount = "vote_count"
     }
+    
+    var releaseYear: String {
+        String(releaseDate.prefix(4))
+    }
+    
+    
 }
 
 struct Movies: Decodable {

@@ -16,7 +16,7 @@ class MovieDetailsController: UIViewController{
     let detailsLabel = UIElements.label(text: "Details", textColor: .systemGray, fontSize: 20, fontWeight: .bold)
     let descriptionLabel = UIElements.label(text: "Description",textColor: .white, fontSize: 15, fontWeight: .semibold)
     let popularityLabel = UIElements.label(text: "Popularity:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
-    let releaseDateLabel = UIElements.label(text: "2021",textColor: .brown, fontSize: 18, fontWeight: .semibold)
+    let releaseYearLabel = UIElements.label(text: "2021",textColor: .brown, fontSize: 18, fontWeight: .semibold)
     let languageLabel = UIElements.label(text: "Language:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
     let adultLabel = UIElements.label(text: "Adult Content:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
     let votesLabel = UIElements.label(text: "Votes:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
@@ -162,7 +162,7 @@ extension MovieDetailsController{
         
         rowStack.addArrangedSubview(starIcon)
         rowStack.addArrangedSubview(ratingLabel)
-        rowStack.addArrangedSubview(releaseDateLabel)
+        rowStack.addArrangedSubview(releaseYearLabel)
         
         englishTitleStack.addArrangedSubview(englishTitleLabel)
         englishTitleStack.addArrangedSubview(englishTitleValue)
@@ -263,7 +263,7 @@ extension MovieDetailsController{
         ratingLabel.text = String(movie.voteAverage)
         descriptionLabel.text = movie.overview
         popularityValue.text = "\(movie.popularity)"
-        releaseDateLabel.text = movie.releaseDate
+        releaseYearLabel.text = movie.releaseYear
         languageValue.text = "\(movie.originalLanguage.uppercased())"
         englishTitleValue.text = movie.title
         votesValue.text = String(movie.voteCount)
