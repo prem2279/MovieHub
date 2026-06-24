@@ -24,38 +24,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3B02514B2FEADC7D009296BA /* Movie Suggestion App (UIKit).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie Suggestion App (UIKit).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B0251612FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Movie Suggestion App (UIKit)Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B02516B2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Movie Suggestion App (UIKit)UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B02514B2FEADC7D009296BA /* MovieHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B0251612FEADC7E009296BA /* MovieHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B02516B2FEADC7E009296BA /* MovieHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3B0251732FEADC7E009296BA /* Exceptions for "Movie Suggestion App (UIKit)" folder in "Movie Suggestion App (UIKit)" target */ = {
+		3B0251732FEADC7E009296BA /* Exceptions for "MovieHub" folder in "MovieHub" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 3B02514A2FEADC7D009296BA /* Movie Suggestion App (UIKit) */;
+			target = 3B02514A2FEADC7D009296BA /* MovieHub */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		3B02514D2FEADC7D009296BA /* Movie Suggestion App (UIKit) */ = {
+		3B02514D2FEADC7D009296BA /* MovieHub */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				3B0251732FEADC7E009296BA /* Exceptions for "Movie Suggestion App (UIKit)" folder in "Movie Suggestion App (UIKit)" target */,
+				3B0251732FEADC7E009296BA /* Exceptions for "MovieHub" folder in "MovieHub" target */,
 			);
-			path = "Movie Suggestion App (UIKit)";
+			path = MovieHub;
 			sourceTree = "<group>";
 		};
-		3B0251642FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests */ = {
+		3B0251642FEADC7E009296BA /* MovieHubTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Movie Suggestion App (UIKit)Tests";
+			path = MovieHubTests;
 			sourceTree = "<group>";
 		};
-		3B02516E2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests */ = {
+		3B02516E2FEADC7E009296BA /* MovieHubUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Movie Suggestion App (UIKit)UITests";
+			path = MovieHubUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,9 +88,9 @@
 		3B0251422FEADC7D009296BA = {
 			isa = PBXGroup;
 			children = (
-				3B02514D2FEADC7D009296BA /* Movie Suggestion App (UIKit) */,
-				3B0251642FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests */,
-				3B02516E2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests */,
+				3B02514D2FEADC7D009296BA /* MovieHub */,
+				3B0251642FEADC7E009296BA /* MovieHubTests */,
+				3B02516E2FEADC7E009296BA /* MovieHubUITests */,
 				3B02514C2FEADC7D009296BA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,9 +98,9 @@
 		3B02514C2FEADC7D009296BA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3B02514B2FEADC7D009296BA /* Movie Suggestion App (UIKit).app */,
-				3B0251612FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests.xctest */,
-				3B02516B2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests.xctest */,
+				3B02514B2FEADC7D009296BA /* MovieHub.app */,
+				3B0251612FEADC7E009296BA /* MovieHubTests.xctest */,
+				3B02516B2FEADC7E009296BA /* MovieHubUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3B02514A2FEADC7D009296BA /* Movie Suggestion App (UIKit) */ = {
+		3B02514A2FEADC7D009296BA /* MovieHub */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B0251742FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)" */;
+			buildConfigurationList = 3B0251742FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHub" */;
 			buildPhases = (
 				3B0251472FEADC7D009296BA /* Sources */,
 				3B0251482FEADC7D009296BA /* Frameworks */,
@@ -121,18 +121,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				3B02514D2FEADC7D009296BA /* Movie Suggestion App (UIKit) */,
+				3B02514D2FEADC7D009296BA /* MovieHub */,
 			);
-			name = "Movie Suggestion App (UIKit)";
+			name = MovieHub;
 			packageProductDependencies = (
 			);
 			productName = "Movie Suggestion App (UIKit)";
-			productReference = 3B02514B2FEADC7D009296BA /* Movie Suggestion App (UIKit).app */;
+			productReference = 3B02514B2FEADC7D009296BA /* MovieHub.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3B0251602FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests */ = {
+		3B0251602FEADC7E009296BA /* MovieHubTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B0251792FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)Tests" */;
+			buildConfigurationList = 3B0251792FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHubTests" */;
 			buildPhases = (
 				3B02515D2FEADC7E009296BA /* Sources */,
 				3B02515E2FEADC7E009296BA /* Frameworks */,
@@ -144,18 +144,18 @@
 				3B0251632FEADC7E009296BA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				3B0251642FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests */,
+				3B0251642FEADC7E009296BA /* MovieHubTests */,
 			);
-			name = "Movie Suggestion App (UIKit)Tests";
+			name = MovieHubTests;
 			packageProductDependencies = (
 			);
 			productName = "Movie Suggestion App (UIKit)Tests";
-			productReference = 3B0251612FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests.xctest */;
+			productReference = 3B0251612FEADC7E009296BA /* MovieHubTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3B02516A2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests */ = {
+		3B02516A2FEADC7E009296BA /* MovieHubUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3B02517C2FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)UITests" */;
+			buildConfigurationList = 3B02517C2FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHubUITests" */;
 			buildPhases = (
 				3B0251672FEADC7E009296BA /* Sources */,
 				3B0251682FEADC7E009296BA /* Frameworks */,
@@ -167,13 +167,13 @@
 				3B02516D2FEADC7E009296BA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				3B02516E2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests */,
+				3B02516E2FEADC7E009296BA /* MovieHubUITests */,
 			);
-			name = "Movie Suggestion App (UIKit)UITests";
+			name = MovieHubUITests;
 			packageProductDependencies = (
 			);
 			productName = "Movie Suggestion App (UIKit)UITests";
-			productReference = 3B02516B2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests.xctest */;
+			productReference = 3B02516B2FEADC7E009296BA /* MovieHubUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3B0251462FEADC7D009296BA /* Build configuration list for PBXProject "Movie Suggestion App (UIKit)" */;
+			buildConfigurationList = 3B0251462FEADC7D009296BA /* Build configuration list for PBXProject "MovieHub" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -213,9 +213,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3B02514A2FEADC7D009296BA /* Movie Suggestion App (UIKit) */,
-				3B0251602FEADC7E009296BA /* Movie Suggestion App (UIKit)Tests */,
-				3B02516A2FEADC7E009296BA /* Movie Suggestion App (UIKit)UITests */,
+				3B02514A2FEADC7D009296BA /* MovieHub */,
+				3B0251602FEADC7E009296BA /* MovieHubTests */,
+				3B02516A2FEADC7E009296BA /* MovieHubUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,12 +271,12 @@
 /* Begin PBXTargetDependency section */
 		3B0251632FEADC7E009296BA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3B02514A2FEADC7D009296BA /* Movie Suggestion App (UIKit) */;
+			target = 3B02514A2FEADC7D009296BA /* MovieHub */;
 			targetProxy = 3B0251622FEADC7E009296BA /* PBXContainerItemProxy */;
 		};
 		3B02516D2FEADC7E009296BA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3B02514A2FEADC7D009296BA /* Movie Suggestion App (UIKit) */;
+			target = 3B02514A2FEADC7D009296BA /* MovieHub */;
 			targetProxy = 3B02516C2FEADC7E009296BA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -290,10 +290,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Movie Suggestion App (UIKit)/Info.plist";
+				INFOPLIST_FILE = MovieHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MovieHub;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -321,10 +322,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Movie Suggestion App (UIKit)/Info.plist";
+				INFOPLIST_FILE = MovieHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MovieHub;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -472,7 +474,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.Movie-Suggestion-App--UIKit-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.MovieHub-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -480,7 +482,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Movie Suggestion App (UIKit).app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Movie Suggestion App (UIKit)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieHub.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MovieHub";
 			};
 			name = Debug;
 		};
@@ -493,7 +495,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.Movie-Suggestion-App--UIKit-Tests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.MovieHub-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -501,7 +503,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Movie Suggestion App (UIKit).app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Movie Suggestion App (UIKit)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieHub.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MovieHub";
 			};
 			name = Release;
 		};
@@ -512,7 +514,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.Movie-Suggestion-App--UIKit-UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.MovieHub-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -531,7 +533,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.Movie-Suggestion-App--UIKit-UITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.prem.MovieHub-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -546,7 +548,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3B0251462FEADC7D009296BA /* Build configuration list for PBXProject "Movie Suggestion App (UIKit)" */ = {
+		3B0251462FEADC7D009296BA /* Build configuration list for PBXProject "MovieHub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B0251772FEADC7E009296BA /* Debug */,
@@ -555,7 +557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B0251742FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)" */ = {
+		3B0251742FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B0251752FEADC7E009296BA /* Debug */,
@@ -564,7 +566,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B0251792FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)Tests" */ = {
+		3B0251792FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHubTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B02517A2FEADC7E009296BA /* Debug */,
@@ -573,7 +575,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3B02517C2FEADC7E009296BA /* Build configuration list for PBXNativeTarget "Movie Suggestion App (UIKit)UITests" */ = {
+		3B02517C2FEADC7E009296BA /* Build configuration list for PBXNativeTarget "MovieHubUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3B02517D2FEADC7E009296BA /* Debug */,

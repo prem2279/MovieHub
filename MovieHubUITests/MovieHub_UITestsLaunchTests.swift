@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class Movie_Suggestion_App__UIKit_UITestsLaunchTests: XCTestCase {
+final class MovieHub_UITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

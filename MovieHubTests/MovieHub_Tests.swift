@@ -6,9 +6,9 @@
 //
 
 import XCTest
-@testable import Movie_Suggestion_App__UIKit_
+@testable import MovieHub
 
-final class Movie_Suggestion_App__UIKit_Tests: XCTestCase {
+final class MovieHub_Tests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
