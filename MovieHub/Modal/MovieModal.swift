@@ -1,5 +1,5 @@
 //
-//  MovieModal.swift
+//  MovieModel.swift
 //  Movie Suggestion App (UIKit)
 //
 //  Created by Prem Kumar Gundu on 6/24/26.

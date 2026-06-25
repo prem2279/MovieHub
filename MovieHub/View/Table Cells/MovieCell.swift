@@ -37,6 +37,15 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let overviewLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.numberOfLines = 3
+        return label
+    }()
+    
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +70,8 @@ class MovieTableViewCell: UITableViewCell {
         let view = UIStackView()
         view.axis = .horizontal
         view.alignment = .center
-        view.distribution = .fill
-        view.spacing = 15
+        view.distribution = .equalSpacing
+        view.spacing = 5
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -75,6 +84,15 @@ class MovieTableViewCell: UITableViewCell {
         view.spacing = 4
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private let disClosureIndicator: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(systemName: "chevron.right")
+        image.tintColor = .white
+        image.contentMode = .scaleAspectFit
+        return image
     }()
     
     // MARK: - Init
@@ -95,28 +113,24 @@ class MovieTableViewCell: UITableViewCell {
 
 extension MovieTableViewCell {
     
-    func configure(with movie: Movie) {
-        movieTitle.text = movie.originalTitle
-        genreLabel.text = movie.genreIds .map { String($0) }.joined(separator: " • ")
-        ratingLabel.text = "⭐ \(movie.voteAverage)"
-        releaseYearLabel.text = movie.releaseYear
+    func configure(with viewModel: MovieDetailsViewModel) {
         
-        UIImage().downloadImage(for: movie.posterPath, completion: {
-            [weak self] result in
-            switch result{
-            case .success(let imageData):
-                DispatchQueue.main.async {
-                    self?.movieImage.image = UIImage(data: imageData)
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
+        movieTitle.text = viewModel.title
+        genreLabel.text = viewModel.genre
+        ratingLabel.text = viewModel.rating
+        releaseYearLabel.text = viewModel.releaseYear
+        overviewLabel.text = viewModel.overview
+        
+        viewModel.fetchPosterImage(completion: { [weak self] result in
+            DispatchQueue.main.async{
+                switch result{
+                case .success(let image):
+                    self?.movieImage.image = image
+                case .failure:
                     self?.movieImage.image = UIImage(systemName: "film")
                 }
-                //self?.onError?(error.rawValue)
-                print(error)
             }
         })
-        
     }
 }
 
@@ -134,16 +148,22 @@ extension MovieTableViewCell {
         cellStackView.addArrangedSubview(movieImage)
         cellStackView.addArrangedSubview(movieInfoStackView)
         cellStackView.addArrangedSubview(releaseYearLabel)
+        cellStackView.addArrangedSubview(disClosureIndicator)
+        
+        cellStackView.layer.cornerRadius = 20
+        cellStackView.clipsToBounds = true
         
         movieInfoStackView.addArrangedSubview(movieTitle)
         movieInfoStackView.addArrangedSubview(genreLabel)
+        movieInfoStackView.addArrangedSubview(overviewLabel)
         movieInfoStackView.addArrangedSubview(ratingLabel)
     }
     
     private func setUpConstraints() {
         
         pinAllCorners(child: cellStackView, parent: contentView, top: 20, leading: 20, trailing: -20)
-        setWidthHeightConstraints(element: movieImage, width: 75, height: 75)
-        setWidthHeightConstraints(element: releaseYearLabel, width: 100)
+        setWidthHeightConstraints(element: movieImage, width: 125, height: 125)
+        setWidthHeightConstraints(element: releaseYearLabel, width: 50)
+        setWidthHeightConstraints(element: disClosureIndicator, width: 25, height: 25)
     }
 }

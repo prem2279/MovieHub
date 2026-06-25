@@ -18,7 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let navigationController = UINavigationController(rootViewController: MoviesDashboardViewController())
+        let rootController = MoviesDashboardViewController()
+        rootController.viewModel = MoviesDashboardViewModel()
+        
+        let navigationController = UINavigationController(rootViewController: rootController)
         navigationController.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white,
             .font: UIFont.systemFont(ofSize: 25, weight: .bold)

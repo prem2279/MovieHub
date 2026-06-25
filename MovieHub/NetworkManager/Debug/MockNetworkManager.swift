@@ -7,7 +7,7 @@
 
 final class MockNetworkManager: Sendable, NetworkProtocol{
     
-    static let instance = MockNetworkManager()
+    static let shared = MockNetworkManager()
     
     private init(){}
     

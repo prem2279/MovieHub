@@ -9,6 +9,10 @@ import UIKit
 
 class MoviesDashboardViewController: UIViewController {
 
+    //MARK: - Properties
+    
+    var viewModel: MoviesDashboardDelegate!
+    
     private let movieTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -19,12 +23,12 @@ class MoviesDashboardViewController: UIViewController {
     private let loader: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .white
         indicator.hidesWhenStopped = true
         return indicator
     }()
     
-    let isInternetAvailable = true
-    var movies:[Movie]?
+    //MARK: - Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +38,32 @@ class MoviesDashboardViewController: UIViewController {
         movieTableView.dataSource = self
         //movies = getMovies()
         setUpUI()
-        getData(for: APIEndPoints.movies)
+        loadData()
         
     }
 }
+
+extension MoviesDashboardViewController {
+    func loadData() {
+        loader.startAnimating()
+        viewModel.getData(){
+            [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    self?.movieTableView.reloadData()
+                case .failure(let error):
+                    self?.showError(message: error.rawValue)
+                }
+                
+                self?.loader.stopAnimating()
+            }
+            
+        }
+    }
+}
+
+//MARK: - UI SetUp Methods
 
 extension MoviesDashboardViewController{
     func setUpUI(){
@@ -55,87 +81,36 @@ extension MoviesDashboardViewController{
         centerX(child: loader, parent: view)
         centerY(child: loader, parent: view)
     }
-    
-    func getData(for endpoint: APIEndPoints) {
-        loader.startAnimating()
-        let completion: (Result<Movies, NetworkError>) -> Void = { [weak self] result in
-            DispatchQueue.main.async {
-                self?.loader.stopAnimating()
-                
-                switch result{
-                case .success(let data):
-                        self?.movies = data.results
-                        self?.movieTableView.reloadData()
-                    
-                case .failure(let error):
-                    //DispatchQueue.main.async {
-                        self?.showError(message: error.rawValue)
-                    //}
-                }
-            }
-        }
-        
-        if isInternetAvailable{
-            NetworkManager.instance.request(endpoint: endpoint, completion: completion)
-        }else{
-            MockNetworkManager.instance.request(endpoint: endpoint, completion: completion)
-        }
-    }
 }
+
+//MARK: - Data Source Methods
 
 extension MoviesDashboardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let movies else {return 0}
-        
-        return movies.count
+        viewModel.getMoviesCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCells.movieCell, for: indexPath) as? MovieTableViewCell
-        
-        if let movie = movies?[indexPath.row]{
-            cell?.configure(with: movie)
+        if let movie = viewModel.getMovieByIndex(at: indexPath.row) {
+            let detailsViewModel = MovieDetailsViewModel(movie: movie)
+            cell?.configure(with: detailsViewModel)
         }
-        //DispatchQueue.main.async {
-//            cell?.onError = { [weak self] message in
-//                self?.showError(message: message)
-//            }
-        //}
-        
         
         return cell ?? UITableViewCell()
     }
 }
 
+//MARK: - Delegate Methods
+
 extension MoviesDashboardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let destination = MovieDetailsController()
-        destination.title = movies?[indexPath.row].originalTitle ?? "Movie Details"
-        destination.view.backgroundColor = .black
-        destination.loadData(movie: movies?[indexPath.row])
-        navigationController?.pushViewController(destination, animated: true)
-    }
-        
-}
-
-extension MoviesDashboardViewController{
-    func showError(message: String){
-        let alert = UIAlertController(
-            title: "Error",
-            message: message,
-            preferredStyle: .alert
-        )
-
-        let action = UIAlertAction(
-            title: "OK",
-            style: .default
-        )
-        
-        alert.addAction(action)
-        DispatchQueue.main.async { [weak self] in
-            self?.present(alert, animated: true)
+        let destination = MovieDetailsViewController()
+        if let movie = viewModel.getMovieByIndex(at: indexPath.row) {
+            let detailsViewModel = MovieDetailsViewModel(movie: movie)
+            destination.configure(with: detailsViewModel)
         }
-        
+        navigationController?.pushViewController(destination, animated: true)
     }
 }
 

@@ -7,25 +7,27 @@
 
 import UIKit
 
-class MovieDetailsController: UIViewController{
-    
+class MovieDetailsViewController: UIViewController{
+    //MARK: - Views
     let genreLabel = UIElements.label(text: "genre", textColor: .white, fontSize: 15, fontWeight: .bold)
     let titleLabel = UIElements.label(text: "Title", textColor: .white, fontSize: 25, fontWeight: .bold)
     let ratingLabel = UIElements.label(text: "5.0", textColor: .red, fontSize: 18, fontWeight: .semibold)
     let overviewLabel = UIElements.label(text: "Overview", textColor: .systemGray, fontSize: 20, fontWeight: .bold)
     let detailsLabel = UIElements.label(text: "Details", textColor: .systemGray, fontSize: 20, fontWeight: .bold)
-    let descriptionLabel = UIElements.label(text: "Description",textColor: .white, fontSize: 15, fontWeight: .semibold)
+    let overviewValue = UIElements.label(text: "Description",textColor: .white, fontSize: 15, fontWeight: .semibold)
     let popularityLabel = UIElements.label(text: "Popularity:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
-    let releaseYearLabel = UIElements.label(text: "2021",textColor: .brown, fontSize: 18, fontWeight: .semibold)
+    let releaseYearLabel = UIElements.label(text: "2021",textColor: .systemOrange, fontSize: 18, fontWeight: .semibold)
     let languageLabel = UIElements.label(text: "Language:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
     let adultLabel = UIElements.label(text: "Adult Content:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
     let votesLabel = UIElements.label(text: "Votes:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
-    let englishTitleLabel = UIElements.label(text: "English Title:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
-    let englishTitleValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
+    let originalTitleLabel = UIElements.label(text: "Original Title:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
+    let originalTitleValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
     let languageValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
     let popularityValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
     let votesValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
     let adultValue = UIElements.label(text: "Value ",textColor: .white, fontSize: 18, fontWeight: .semibold)
+    let releaseDateLabel = UIElements.label(text: "Release Date:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
+    let releaseDateValue = UIElements.label(text: "2021",textColor: .white, fontSize: 18, fontWeight: .semibold)
     //var bannerColor: UIColor = .systemGray
     
     let scrollView: UIScrollView = {
@@ -51,6 +53,24 @@ class MovieDetailsController: UIViewController{
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    let starIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image =  UIImage(systemName: "star.fill")
+        imageView.tintColor = .systemOrange
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        //imageView.image =  UIImage(systemName: "star.fill")
+        //imageView.tintColor = .systemOrange
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    //MARK: - Stack Views
     
     let rowStack: UIStackView = {
         let view = UIStackView()
@@ -112,6 +132,16 @@ class MovieDetailsController: UIViewController{
         return view
     }()
     
+    let releaseDateStack: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fill
+        view.spacing = 5
+        return view
+    }()
+    
     let detailsStack: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -122,21 +152,7 @@ class MovieDetailsController: UIViewController{
         return view
     }()
     
-    let starIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image =  UIImage(systemName: "star.fill")
-        imageView.tintColor = .systemOrange
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        //imageView.image =  UIImage(systemName: "star.fill")
-        //imageView.tintColor = .systemOrange
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    //MARK: - LifeCycle Methods
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -145,9 +161,12 @@ class MovieDetailsController: UIViewController{
     }
 }
 
-extension MovieDetailsController{
+
+//MARK: - Setting UP UI
+
+extension MovieDetailsViewController{
     func setUpUI(){
-        
+        view.backgroundColor = .black
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(bannerView)
@@ -156,7 +175,7 @@ extension MovieDetailsController{
         contentView.addSubview(titleLabel)
         contentView.addSubview(rowStack)
         contentView.addSubview(overviewLabel)
-        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(overviewValue)
         contentView.addSubview(detailsLabel)
         contentView.addSubview(detailsStack)
         
@@ -164,8 +183,8 @@ extension MovieDetailsController{
         rowStack.addArrangedSubview(ratingLabel)
         rowStack.addArrangedSubview(releaseYearLabel)
         
-        englishTitleStack.addArrangedSubview(englishTitleLabel)
-        englishTitleStack.addArrangedSubview(englishTitleValue)
+        englishTitleStack.addArrangedSubview(originalTitleLabel)
+        englishTitleStack.addArrangedSubview(originalTitleValue)
         
         languageStack.addArrangedSubview(languageLabel)
         languageStack.addArrangedSubview(languageValue)
@@ -179,18 +198,22 @@ extension MovieDetailsController{
         votesStack.addArrangedSubview(votesLabel)
         votesStack.addArrangedSubview(votesValue)
         
+        releaseDateStack.addArrangedSubview(releaseDateLabel)
+        releaseDateStack.addArrangedSubview(releaseDateValue)
+        
         detailsStack.addArrangedSubview(englishTitleStack)
         detailsStack.addArrangedSubview(languageStack)
         detailsStack.addArrangedSubview(adultStack)
         detailsStack.addArrangedSubview(popularityStack)
         detailsStack.addArrangedSubview(votesStack)
+        detailsStack.addArrangedSubview(releaseDateStack)
         
         genreView.backgroundColor = .red
         genreView.layer.cornerRadius = 10
         genreView.clipsToBounds = true
         
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .justified
+        overviewValue.numberOfLines = 0
+        overviewValue.textAlignment = .justified
         
         //bannerView.backgroundColor = bannerColor
         bannerView.addSubview(backgroundImage)
@@ -227,10 +250,10 @@ extension MovieDetailsController{
         pinTopToBottomCorner(child: overviewLabel, parent: rowStack, top: 20)
         pinLeadingCorner(child: overviewLabel, parent: contentView, leading: 16)
         
-        pinTopToBottomCorner(child: descriptionLabel, parent: overviewLabel, top: 8)
-        pinLeftRightCorners(child: descriptionLabel, parent: contentView, leading: 16, trailing: -16)
+        pinTopToBottomCorner(child: overviewValue, parent: overviewLabel, top: 8)
+        pinLeftRightCorners(child: overviewValue, parent: contentView, leading: 16, trailing: -16)
         
-        pinTopToBottomCorner(child: detailsLabel, parent: descriptionLabel, top: 24)
+        pinTopToBottomCorner(child: detailsLabel, parent: overviewValue, top: 24)
         pinLeadingCorner(child: detailsLabel, parent: contentView, leading: 16)
         
         pinTopToBottomCorner(child: detailsStack, parent: detailsLabel, top: 10)
@@ -242,43 +265,34 @@ extension MovieDetailsController{
         
 }
 
-extension MovieDetailsController{
-    func loadData(movie: Movie?){
-        
-        guard let movie else {return}
-        
-//        let movie = Movie(
-//            title: "Inception",
-//            genre: ["Sci-Fi"].prefix(2).joined(separator: " • "),
-//            rating: 8.8,
-//            year: 2010,
-//            overview: "A skilled thief is offered a chance to have his criminal record erased if he can successfully perform inception — planting an idea into someone's subconscious. A skilled thief is offered a chance to have his criminal record erased if he can successfully perform inception — planting an idea into someone's subconscious. A skilled thief is offered a chance to have his criminal record erased if he can successfully perform inception — planting an idea into someone's subconscious. A skilled thief is offered a chance to have his criminal record erased if he can successfully perform inception — planting an idea into someone's subconscious.",
-//            director: "Christopher Nolan",
-//            duration: "2h 28min",
-//            //bannerColor: .systemBlue
-//        )
+//MARK: - Configuring the Data
 
-        genreLabel.text = movie.genreIds.map{ String($0) }.joined(separator: " • ")
-        titleLabel.text = movie.originalTitle
-        ratingLabel.text = String(movie.voteAverage)
-        descriptionLabel.text = movie.overview
-        popularityValue.text = "\(movie.popularity)"
-        releaseYearLabel.text = movie.releaseYear
-        languageValue.text = "\(movie.originalLanguage.uppercased())"
-        englishTitleValue.text = movie.title
-        votesValue.text = String(movie.voteCount)
-        adultValue.text = movie.adult ? "Yes" : "No"
-        //bannerColor =  .blue
-        UIImage().downloadImage(for: movie.backdropPath){
-            result in
-            switch result {
-            case .success(let data):
-                DispatchQueue.main.async{
-                    [weak self] in
-                    self?.backgroundImage.image = UIImage(data: data)
+extension MovieDetailsViewController{
+    func configure(with viewModel: MovieDetailsViewModel){
+        
+        self.title = viewModel.title
+        genreLabel.text = viewModel.genre
+        titleLabel.text = viewModel.title
+        ratingLabel.text = viewModel.rating
+        overviewValue.text = viewModel.overview
+        popularityValue.text = viewModel.popularity
+        releaseYearLabel.text = viewModel.releaseYear
+        languageValue.text = viewModel.language
+        originalTitleValue.text = viewModel.originalTitle
+        votesValue.text = viewModel.votes
+        adultValue.text = viewModel.adultContent
+        releaseDateValue.text = viewModel.releaseDate
+        
+        viewModel.fetchBackgroundImage{ [weak self] result in
+            DispatchQueue.main.async{
+                switch result {
+                case .success(let image):
+                    self?.backgroundImage.image = image
+                    
+                case .failure:
+                    self?.backgroundImage.image = UIImage(systemName: "film")
+                    //print(error)
                 }
-            case .failure(let error):
-                print(error)
             }
         }
         

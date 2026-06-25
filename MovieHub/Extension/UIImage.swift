@@ -11,7 +11,7 @@ extension UIImage {
     
     func downloadImage(
         for url: String,
-        completion: @escaping (Result<Data, NetworkError>) -> Void
+        completion: @escaping (Result<UIImage, NetworkError>) -> Void
     ){
         
         guard let serverURL = URL(string: APIEndPoints.image.basePath + url) else{
@@ -37,7 +37,14 @@ extension UIImage {
                 return
             }
             
-            completion(.success(data))
+            guard let image = UIImage(data: data) else {
+                print("Error Occoured while decoding the Image Data")
+                completion(.failure(.decodingError))
+                return
+            }
+            
+            completion(.success(image))
+            
         }.resume()
     }
 }

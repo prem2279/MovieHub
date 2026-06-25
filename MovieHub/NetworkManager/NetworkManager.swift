@@ -17,9 +17,9 @@ protocol NetworkProtocol: AnyObject{
 
 final class NetworkManager: NetworkProtocol, Sendable{
     
-    private let apiKey = "add your api key"
+    private let apiKey = "c91ed3a7a344459eccad9687acf0d07e"
     
-    static let instance = NetworkManager()
+    static let shared = NetworkManager()
     
     private init(){}
     
