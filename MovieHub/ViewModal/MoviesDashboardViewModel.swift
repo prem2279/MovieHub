@@ -5,32 +5,56 @@
 //  Created by Prem Kumar Gundu on 6/24/26.
 //
 // MARK: - Movies Delegate Protocol
+import Foundation
 protocol MoviesDashboardDelegate: AnyObject{
     func getMoviesCount() -> Int
     func getMovieByIndex(at index: Int) -> Movie?
-    func getData(completion: @escaping ((Result<Void, NetworkError>)) -> ())
+    func getData(completionHandler: @escaping (String?) -> ())
+    func searchMovies(searchText: String)
 }
 
 class MoviesDashboardViewModel {
     
     // MARK: - Properties
     
-    var movies:[Movie]?
+    private var movies:[Movie] = []
+    private var filteredMovies: [Movie] = []
+    private var networkInstance: NetworkProtocol
+    
+    init(networkInstance: NetworkProtocol = NetworkManager.shared) {
+        self.networkInstance = networkInstance
+    }
     
     // MARK: - Methods
-    func getData(completion: @escaping ((Result<Void, NetworkError>)) -> ()) {
-        let completion: (Result<Movies, NetworkError>) -> Void = {
+    func getData(completionHandler: @escaping (String?) -> ()) {
+        let completion: (NetworkState<Movies>) -> Void = {
             [weak self] result in
             switch result{
-            case .success(let data):
+            case .successful(let data):
                 self?.movies = data.results
-                completion(.success(()))
+                self?.filteredMovies = data.results
+                completionHandler("")
             case .failure(let error):
-                completion(.failure(error))
+                completionHandler(error.rawValue)
+            case .loading:
+                completionHandler(nil)
             }
         }
         
-        APIClient.shared.request(endpoint: .movies, completion: completion)
+        networkInstance.request(endpoint: .movies, completion: completion)
+    }
+
+}
+
+
+
+extension MoviesDashboardViewModel {
+    func searchMovies(searchText: String){
+        filteredMovies =  searchText.isEmpty
+            ? movies
+            : movies.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText)
+            }
     }
 }
 
@@ -38,15 +62,13 @@ class MoviesDashboardViewModel {
 
 extension MoviesDashboardViewModel: MoviesDashboardDelegate {
     func getMoviesCount() -> Int {
-        guard let movies else { return 0 }
-        return movies.count
+        return filteredMovies.count
     }
     
     func getMovieByIndex(at index: Int) -> Movie? {
-        guard let movies else { return nil }
         
-        if movies.indices.contains(index){
-            return movies[index]
+        if filteredMovies.indices.contains(index){
+            return filteredMovies[index]
         }
         
         return nil

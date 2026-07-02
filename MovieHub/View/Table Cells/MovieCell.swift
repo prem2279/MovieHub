@@ -32,16 +32,26 @@ class MovieTableViewCell: UITableViewCell {
     private let genreLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .lightGray
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .black
+        label.clipsToBounds = true
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         return label
+    }()
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray6
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        return view
     }()
     
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         label.numberOfLines = 3
         return label
     }()
@@ -49,10 +59,28 @@ class MovieTableViewCell: UITableViewCell {
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = .orange
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .red
         label.textAlignment = .right
         return label
+    }()
+    
+    let starIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image =  UIImage(systemName: "star.fill")
+        imageView.tintColor = .systemOrange
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let ratingStack: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fill
+        view.spacing = 5
+        return view
     }()
     
     private let releaseYearLabel: UILabel = {
@@ -120,17 +148,8 @@ extension MovieTableViewCell {
         ratingLabel.text = viewModel.rating
         releaseYearLabel.text = viewModel.releaseYear
         overviewLabel.text = viewModel.overview
-        
-        viewModel.fetchPosterImage(completion: { [weak self] result in
-            DispatchQueue.main.async{
-                switch result{
-                case .success(let image):
-                    self?.movieImage.image = image
-                case .failure:
-                    self?.movieImage.image = UIImage(systemName: "film")
-                }
-            }
-        })
+        //movieImage.image = UIImage(systemName: "film")
+        movieImage.downloadImage(for: viewModel.posterPath, defaultImage: "film")
     }
 }
 
@@ -153,10 +172,15 @@ extension MovieTableViewCell {
         cellStackView.layer.cornerRadius = 20
         cellStackView.clipsToBounds = true
         
+        containerView.addSubview(genreLabel)
+        
+        ratingStack.addArrangedSubview(starIcon)
+        ratingStack.addArrangedSubview(ratingLabel)
+        
         movieInfoStackView.addArrangedSubview(movieTitle)
-        movieInfoStackView.addArrangedSubview(genreLabel)
+        movieInfoStackView.addArrangedSubview(containerView)
         movieInfoStackView.addArrangedSubview(overviewLabel)
-        movieInfoStackView.addArrangedSubview(ratingLabel)
+        movieInfoStackView.addArrangedSubview(ratingStack)
     }
     
     private func setUpConstraints() {
@@ -165,5 +189,6 @@ extension MovieTableViewCell {
         setWidthHeightConstraints(element: movieImage, width: 125, height: 125)
         setWidthHeightConstraints(element: releaseYearLabel, width: 50)
         setWidthHeightConstraints(element: disClosureIndicator, width: 25, height: 25)
+        pinAllCorners(child: genreLabel, parent: containerView, leading: 5, trailing: -5)
     }
 }

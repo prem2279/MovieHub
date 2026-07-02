@@ -10,7 +10,7 @@ import UIKit
 protocol NetworkProtocol: AnyObject{
     func request<T: Decodable>(
         endpoint:APIEndPoints,
-        completion: @escaping (Result<T, NetworkError>) -> Void
+        completion: @escaping (NetworkState<T>) -> Void
     )
     
 }
@@ -25,12 +25,14 @@ final class NetworkManager: NetworkProtocol, Sendable{
     
     func request<T: Decodable>(
         endpoint:APIEndPoints,
-        completion: @escaping (Result<T, NetworkError>) -> Void
+        completion: @escaping (NetworkState<T>) -> Void
     ){
+        
+        completion(.loading)
         
         guard let serverURL = URL(string: endpoint.basePath + apiKey) else{
             print("Invalid URL")
-            completion(.failure(.invalidURL))
+            completion(.failure(error: .invalidURL))
             return
         }
         
@@ -41,22 +43,22 @@ final class NetworkManager: NetworkProtocol, Sendable{
             
             if error != nil {
                 print("Error occured \(error!.localizedDescription)")
-                completion(.failure(.serverError))
+                completion(.failure(error: .serverError))
                 return
             }
             
             guard let data else {
                 print("No data from the server")
-                completion(.failure(.noData))
+                completion(.failure(error: .noData))
                 return
             }
             
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decodedData))
+                completion(.successful(data: decodedData))
             }catch{
                 print("Error occurred: \(error)")
-                completion(.failure(.decodingError))
+                completion(.failure(error: .decodingError))
             }
             
         }.resume()

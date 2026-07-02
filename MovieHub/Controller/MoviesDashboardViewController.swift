@@ -12,6 +12,9 @@ class MoviesDashboardViewController: UIViewController {
     //MARK: - Properties
     
     var viewModel: MoviesDashboardDelegate!
+    weak var coordinator: NavigationCordinatorProtocol?
+    
+    private let searchController = UISearchController(searchResultsController: nil)
     
     private let movieTableView: UITableView = {
         let tableView = UITableView()
@@ -37,28 +40,36 @@ class MoviesDashboardViewController: UIViewController {
         movieTableView.delegate = self
         movieTableView.dataSource = self
         //movies = getMovies()
-        setUpUI()
+        setupUI()
+        setupSearchBar()
         loadData()
-        
     }
 }
 
+//MARK: - Fetching the Data
+
 extension MoviesDashboardViewController {
     func loadData() {
-        loader.startAnimating()
+        
         viewModel.getData(){
-            [weak self] result in
+            [weak self] error in
             DispatchQueue.main.async {
-                switch result {
-                case .success():
+                switch error {
+                case "":
+                    // Success State
                     self?.movieTableView.reloadData()
-                case .failure(let error):
-                    self?.showError(message: error.rawValue)
+                    self?.loader.stopAnimating()
+                case nil:
+                    // Loading State
+                    self?.loader.startAnimating()
+                default:
+                    //Failure State
+                    self?.showError(message: error ?? "")
+                    self?.loader.stopAnimating()
+                    
                 }
                 
-                self?.loader.stopAnimating()
             }
-            
         }
     }
 }
@@ -66,7 +77,7 @@ extension MoviesDashboardViewController {
 //MARK: - UI SetUp Methods
 
 extension MoviesDashboardViewController{
-    func setUpUI(){
+    private func setupUI() {
         view.addSubview(movieTableView)
         view.addSubview(loader)
         title = "Movie Hub"
@@ -80,6 +91,39 @@ extension MoviesDashboardViewController{
         
         centerX(child: loader, parent: view)
         centerY(child: loader, parent: view)
+    }
+    
+    private func setupSearchBar() {
+
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Movies"
+        searchController.searchBar.showsCancelButton = false
+
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+
+        //definesPresentationContext = true
+    }
+}
+
+//MARK: - Search Results Updator
+
+extension MoviesDashboardViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+
+        let searchText = searchController.searchBar.text ?? ""
+
+        viewModel.searchMovies(searchText: searchText)
+        reloadDataBasedOnSearch()
+    }
+    
+    func reloadDataBasedOnSearch(){
+        DispatchQueue.main.async { [weak self] in
+            self?.movieTableView.reloadData()
+        }
     }
 }
 
@@ -105,12 +149,8 @@ extension MoviesDashboardViewController: UITableViewDataSource {
 
 extension MoviesDashboardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let destination = MovieDetailsViewController()
-        if let movie = viewModel.getMovieByIndex(at: indexPath.row) {
-            let detailsViewModel = MovieDetailsViewModel(movie: movie)
-            destination.configure(with: detailsViewModel)
-        }
-        navigationController?.pushViewController(destination, animated: true)
+        //print(coordinator, "called")
+        coordinator?.navigateToMovieDetails(movie: viewModel.getMovieByIndex(at: indexPath.row))
     }
 }
 

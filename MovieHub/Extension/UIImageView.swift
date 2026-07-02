@@ -7,16 +7,18 @@
 
 import UIKit
 
-extension UIImage {
+extension UIImageView{
     
     func downloadImage(
-        for url: String,
-        completion: @escaping (Result<UIImage, NetworkError>) -> Void
+        for url: String, defaultImage: String
     ){
         
         guard let serverURL = URL(string: APIEndPoints.image.basePath + url) else{
             print("Invalid URL")
-            completion(.failure(.invalidURL))
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.image = UIImage(systemName: defaultImage)
+            }
             return
         }
         
@@ -27,23 +29,35 @@ extension UIImage {
             
             if error != nil {
                 print("Error occured \(error!.localizedDescription)")
-                completion(.failure(.serverError))
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.image = UIImage(systemName: defaultImage)
+                }
                 return
             }
             
             guard let data else {
                 print("No data from the server")
-                completion(.failure(.noData))
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.image = UIImage(systemName: defaultImage)
+                }
                 return
             }
             
             guard let image = UIImage(data: data) else {
                 print("Error Occoured while decoding the Image Data")
-                completion(.failure(.decodingError))
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.image = UIImage(systemName: defaultImage)
+                }
                 return
             }
             
-            completion(.success(image))
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.image = image
+            }
             
         }.resume()
     }

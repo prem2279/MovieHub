@@ -5,7 +5,7 @@
 //  Created by Prem Kumar Gundu on 6/9/26.
 //
 
-final class MockNetworkManager: Sendable, NetworkProtocol{
+final class MockNetworkManager: Sendable{
     
     static let shared = MockNetworkManager()
     

@@ -25,7 +25,7 @@ final class MovieDetailsViewModel {
     }
     
     var rating: String {
-        String(movie.voteAverage)
+        String(format: "%.1f", movie.voteAverage)
     }
     
     var releaseYear: String {
@@ -60,11 +60,11 @@ final class MovieDetailsViewModel {
         movie.releaseDate
     }
     
-    func fetchBackgroundImage(completion: @escaping (Result<UIImage, NetworkError>) -> Void){
-        UIImage().downloadImage(for: movie.backdropPath, completion: completion)
+    var backdropPath: String {
+        movie.backdropPath
     }
     
-    func fetchPosterImage(completion: @escaping (Result<UIImage, NetworkError>) -> Void){
-        UIImage().downloadImage(for: movie.posterPath, completion: completion)
+    var posterPath: String {
+        movie.posterPath
     }
 }

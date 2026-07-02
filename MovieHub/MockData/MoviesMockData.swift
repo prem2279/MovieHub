@@ -26,8 +26,8 @@ func getMoviesData()->Movies?{
           "release_date": "2026-06-19",
           "softcore": false,
           "video": false,
-          "vote_average": 5.7,
-          "vote_count": 7
+          "vote_average": 5.7,	
+          "vote_count": 7	
         }
       ],
       "total_pages": 57589,

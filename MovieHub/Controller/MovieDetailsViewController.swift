@@ -7,7 +7,11 @@
 
 import UIKit
 
-class MovieDetailsViewController: UIViewController{
+protocol MovieDetailsProtocol {
+    func configure(with viewModel: MovieDetailsViewModel)
+}
+
+class MovieDetailsViewController: UIViewController {
     //MARK: - Views
     let genreLabel = UIElements.label(text: "genre", textColor: .white, fontSize: 15, fontWeight: .bold)
     let titleLabel = UIElements.label(text: "Title", textColor: .white, fontSize: 25, fontWeight: .bold)
@@ -29,6 +33,8 @@ class MovieDetailsViewController: UIViewController{
     let releaseDateLabel = UIElements.label(text: "Release Date:",textColor: .systemGray, fontSize: 15, fontWeight: .semibold)
     let releaseDateValue = UIElements.label(text: "2021",textColor: .white, fontSize: 18, fontWeight: .semibold)
     //var bannerColor: UIColor = .systemGray
+    
+    weak var coordinator: NavigationCordinatorProtocol?
     
     let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -152,6 +158,30 @@ class MovieDetailsViewController: UIViewController{
         return view
     }()
     
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .red
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        return button
+    }()
+    
+    let nextButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .tintColor
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        return button
+    }()
+    
     //MARK: - LifeCycle Methods
     
     override func viewDidLoad(){
@@ -164,7 +194,7 @@ class MovieDetailsViewController: UIViewController{
 
 //MARK: - Setting UP UI
 
-extension MovieDetailsViewController{
+extension MovieDetailsViewController {
     func setUpUI(){
         view.backgroundColor = .black
         view.addSubview(scrollView)
@@ -178,6 +208,8 @@ extension MovieDetailsViewController{
         contentView.addSubview(overviewValue)
         contentView.addSubview(detailsLabel)
         contentView.addSubview(detailsStack)
+        contentView.addSubview(backButton)
+        contentView.addSubview(nextButton)
         
         rowStack.addArrangedSubview(starIcon)
         rowStack.addArrangedSubview(ratingLabel)
@@ -259,7 +291,23 @@ extension MovieDetailsViewController{
         pinTopToBottomCorner(child: detailsStack, parent: detailsLabel, top: 10)
         //pinLeftRightCorners(child: detailsStack, parent: contentView, leading: 16, trailing: -16)
         pinLeadingCorner(child: detailsStack, parent: contentView, leading: 16)
-        pinBottomCorner(child: detailsStack, parent: contentView, bottom: -30)
+        //pinBottomCorner(child: detailsStack, parent: contentView, bottom: -30)
+        
+        pinTopToBottomCorner(child: nextButton, parent: detailsStack, top: 30)
+        //pinLeftRightCorners(child: backButton, parent: contentView)
+        centerX(child: nextButton, parent: view)
+        setWidthHeightConstraints(element: nextButton, width: 100, height: 30)
+        
+        pinTopToBottomCorner(child: backButton, parent: nextButton, top: 30)
+        //pinLeftRightCorners(child: backButton, parent: contentView)
+        centerX(child: backButton, parent: view)
+        pinBottomCorner(child: backButton, parent: contentView, bottom: -30)
+        setWidthHeightConstraints(element: backButton, width: 100, height: 30)
+        
+        
+        
+        backButton.addTarget(self, action: #selector(backPage), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextPage), for: .touchUpInside)
         
     }
         
@@ -267,7 +315,7 @@ extension MovieDetailsViewController{
 
 //MARK: - Configuring the Data
 
-extension MovieDetailsViewController{
+extension MovieDetailsViewController: MovieDetailsProtocol{
     func configure(with viewModel: MovieDetailsViewModel){
         
         self.title = viewModel.title
@@ -282,19 +330,22 @@ extension MovieDetailsViewController{
         votesValue.text = viewModel.votes
         adultValue.text = viewModel.adultContent
         releaseDateValue.text = viewModel.releaseDate
+        backgroundImage.image = UIImage(systemName: "film")
+        backgroundImage.downloadImage(for: viewModel.backdropPath, defaultImage: "film")
         
-        viewModel.fetchBackgroundImage{ [weak self] result in
-            DispatchQueue.main.async{
-                switch result {
-                case .success(let image):
-                    self?.backgroundImage.image = image
-                    
-                case .failure:
-                    self?.backgroundImage.image = UIImage(systemName: "film")
-                    //print(error)
-                }
-            }
-        }
         
+    }
+}
+
+extension MovieDetailsViewController {
+    @objc
+    func backPage() {
+      //TODO: - Call Cordinator to go back
+        coordinator?.back()
+    }
+    
+    @objc
+    func nextPage() {
+        coordinator?.navigateToRedPage(content: "This is Red Color Page")
     }
 }
