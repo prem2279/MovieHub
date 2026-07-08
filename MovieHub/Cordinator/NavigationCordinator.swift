@@ -14,6 +14,7 @@ protocol CommonPageConfigurable: UIViewController {
 protocol NavigationCordinatorProtocol: AnyObject {
     func back()
     func home()
+    func login()
     func navigateToMovieDetails(movie: Movie?)
     func navigateToRedPage(content: String)
     func navigateToBluePage(content: String)
@@ -44,8 +45,15 @@ class NavigationCordinator: NavigationCordinatorProtocol {
         navigationController.popViewController(animated: true)
     }
     
-    func home() {
+    func login() {
         navigationController.popToRootViewController(animated: true)
+    }
+    
+    func home() {
+        let homeController = MoviesDashboardViewController()
+        homeController.viewModel = MoviesDashboardViewModel()
+        homeController.coordinator = self
+        navigationController.pushViewController(homeController, animated: true)
     }
     
     func navigateToMovieDetails(movie: Movie?) {

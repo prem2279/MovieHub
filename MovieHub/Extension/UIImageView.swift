@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIImageView{
+extension UIImageView {
     
     func downloadImage(
         for url: String, defaultImage: String
@@ -18,6 +18,15 @@ extension UIImageView{
             DispatchQueue.main.async {
                 [weak self] in
                 self?.image = UIImage(systemName: defaultImage)
+            }
+            return
+        }
+        
+        if let cachedImage = ImageCache.shared.getImage(for: serverURL) {
+            print("Image Coming From Cache")
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.image = cachedImage
             }
             return
         }
@@ -58,6 +67,7 @@ extension UIImageView{
                 [weak self] in
                 self?.image = image
             }
+            ImageCache.shared.setImage(image, for: serverURL)
             
         }.resume()
     }

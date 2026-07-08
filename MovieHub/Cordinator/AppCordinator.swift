@@ -17,15 +17,11 @@ final class AppCoordinator {
     }
     
     func start() {
-        let rootController = MoviesDashboardViewController()
-        rootController.viewModel = MoviesDashboardViewModel()
         
         navigationCoordinator = NavigationCordinator(navigationController: navigationController)
-        
-        rootController.coordinator = navigationCoordinator
-        
-        navigationController.viewControllers = [rootController]
-        
+        let loginVC = LoginViewController()
+        loginVC.coordinator = navigationCoordinator
+        navigationController.viewControllers.append(loginVC)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

@@ -27,8 +27,22 @@ class MoviesDashboardViewModel {
     
     // MARK: - Methods
     func getData(completionHandler: @escaping (String?) -> ()) {
-        let completion: (NetworkState<Movies>) -> Void = {
-            [weak self] result in
+//        let completion: (NetworkState<Movies>) -> Void = {
+//            [weak self] result in
+//            switch result{
+//            case .successful(let data):
+//                self?.movies = data.results
+//                self?.filteredMovies = data.results
+//                completionHandler("")
+//            case .failure(let error):
+//                completionHandler(error.rawValue)
+//            case .loading:
+//                completionHandler(nil)
+//            }
+//        }
+        
+        networkInstance.request(endpoint: .movies){
+            [weak self] (result: NetworkState<Movies>) in
             switch result{
             case .successful(let data):
                 self?.movies = data.results
@@ -40,8 +54,6 @@ class MoviesDashboardViewModel {
                 completionHandler(nil)
             }
         }
-        
-        networkInstance.request(endpoint: .movies, completion: completion)
     }
 
 }
