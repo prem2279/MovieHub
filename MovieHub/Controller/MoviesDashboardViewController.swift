@@ -15,6 +15,9 @@ class MoviesDashboardViewController: UIViewController {
     weak var coordinator: NavigationCordinatorProtocol?
     
     private let searchController = UISearchController(searchResultsController: nil)
+
+    // Debounces API calls while the user is still typing
+    private var searchDebounceWorkItem: DispatchWorkItem?
     
     private let movieTableView: UITableView = {
         let tableView = UITableView()
@@ -81,6 +84,13 @@ extension MoviesDashboardViewController{
         view.addSubview(movieTableView)
         view.addSubview(loader)
         title = "Movie Hub"
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "sparkles"),
+            style: .plain,
+            target: self,
+            action: #selector(openAISearch)
+        )
         
         NSLayoutConstraint.activate([
             movieTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -106,6 +116,10 @@ extension MoviesDashboardViewController{
 
         //definesPresentationContext = true
     }
+
+    @objc private func openAISearch() {
+        coordinator?.presentMovieChat()
+    }
 }
 
 //MARK: - Search Results Updator
@@ -116,13 +130,35 @@ extension MoviesDashboardViewController: UISearchResultsUpdating {
 
         let searchText = searchController.searchBar.text ?? ""
 
-        viewModel.searchMovies(searchText: searchText)
-        reloadDataBasedOnSearch()
+        searchDebounceWorkItem?.cancel()
+
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.searchMovies(searchText: searchText)
+        }
+
+        searchDebounceWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: workItem)
     }
-    
-    func reloadDataBasedOnSearch(){
-        DispatchQueue.main.async { [weak self] in
-            self?.movieTableView.reloadData()
+
+    private func searchMovies(searchText: String) {
+
+        viewModel.searchMovies(searchText: searchText){
+            [weak self] error in
+            DispatchQueue.main.async {
+                switch error {
+                case "":
+                    // Success State
+                    self?.movieTableView.reloadData()
+                    self?.loader.stopAnimating()
+                case nil:
+                    // Loading State
+                    self?.loader.startAnimating()
+                default:
+                    //Failure State
+                    self?.showError(message: error ?? "")
+                    self?.loader.stopAnimating()
+                }
+            }
         }
     }
 }

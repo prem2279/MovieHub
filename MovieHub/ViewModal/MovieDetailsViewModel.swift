@@ -61,10 +61,10 @@ final class MovieDetailsViewModel {
     }
     
     var backdropPath: String {
-        movie.backdropPath
+        movie.backdropPath ?? ""
     }
-    
+
     var posterPath: String {
-        movie.posterPath
+        movie.posterPath ?? ""
     }
 }

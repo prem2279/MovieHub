@@ -10,7 +10,7 @@ protocol MoviesDashboardDelegate: AnyObject{
     func getMoviesCount() -> Int
     func getMovieByIndex(at index: Int) -> Movie?
     func getData(completionHandler: @escaping (String?) -> ())
-    func searchMovies(searchText: String)
+    func searchMovies(searchText: String, completionHandler: @escaping (String?) -> ())
 }
 
 class MoviesDashboardViewModel {
@@ -61,12 +61,27 @@ class MoviesDashboardViewModel {
 
 
 extension MoviesDashboardViewModel {
-    func searchMovies(searchText: String){
-        filteredMovies =  searchText.isEmpty
-            ? movies
-            : movies.filter {
-                $0.title.localizedCaseInsensitiveContains(searchText)
+    func searchMovies(searchText: String, completionHandler: @escaping (String?) -> ()) {
+
+        // Empty search restores the default discover list without a network call
+        guard !searchText.isEmpty else {
+            filteredMovies = movies
+            completionHandler("")
+            return
+        }
+
+        networkInstance.request(endpoint: .searchMovies(query: searchText)){
+            [weak self] (result: NetworkState<Movies>) in
+            switch result{
+            case .successful(let data):
+                self?.filteredMovies = data.results
+                completionHandler("")
+            case .failure(let error):
+                completionHandler(error.rawValue)
+            case .loading:
+                completionHandler(nil)
             }
+        }
     }
 }
 

@@ -15,7 +15,7 @@ final class MockNetworkManager: Sendable{
         let data: Any?
         
         switch endpoint {
-        case .movies:
+        case .movies, .discoverMovies, .searchMovies:
             if let tempData = getMoviesData(){
                 data = tempData
             }else{

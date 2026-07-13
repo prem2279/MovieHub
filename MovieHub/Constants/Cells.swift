@@ -7,4 +7,5 @@
 
 enum TableViewCells{
     static let movieCell = "MovieCell"
+    static let chatMessageCell = "ChatMessageCell"
 }

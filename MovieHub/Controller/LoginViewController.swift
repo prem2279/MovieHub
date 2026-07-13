@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import FirebaseCrashlytics
 
 enum AppTheme: String {
     case light
@@ -212,7 +213,7 @@ class LoginViewController: UIViewController {
 
     @objc
     private func saveUserName() {
-
+        //fatalError("Crashlytics test crash")
         if rememberSwitch.isOn {
             UserDefaults.standard.set(
                 userName.text,

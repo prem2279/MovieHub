@@ -9,7 +9,7 @@ import UIKit
 
 struct Movie: Decodable {
     let adult: Bool
-    let backdropPath: String
+    let backdropPath: String?
     let title: String
     let id : Int
     let genreIds: [Int]
@@ -18,9 +18,9 @@ struct Movie: Decodable {
     let originalLanguage : String
     let originalTitle: String
     let popularity: Double
-    let posterPath: String
+    let posterPath: String?
     let releaseDate: String
-    let softcore: Bool
+    let softcore: Bool?
     let video: Bool
     let voteCount: Int
 

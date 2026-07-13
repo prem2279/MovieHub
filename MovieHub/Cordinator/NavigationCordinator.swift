@@ -16,6 +16,7 @@ protocol NavigationCordinatorProtocol: AnyObject {
     func home()
     func login()
     func navigateToMovieDetails(movie: Movie?)
+    func presentMovieChat()
     func navigateToRedPage(content: String)
     func navigateToBluePage(content: String)
     func navigateToBlackPage(content: String)
@@ -66,6 +67,21 @@ class NavigationCordinator: NavigationCordinatorProtocol {
         navigationController.pushViewController(destinationVC, animated: true)
     }
     
+    func presentMovieChat() {
+        let chatVC = MovieChatViewController()
+        chatVC.viewModel = MovieChatViewModel()
+        chatVC.coordinator = self
+
+        // Shows the chat bot as a sheet on top of the dashboard
+        if let sheet = chatVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.selectedDetentIdentifier = .large
+            sheet.prefersGrabberVisible = true
+        }
+
+        navigationController.present(chatVC, animated: true)
+    }
+
     func navigateToRedPage(content: String) {
         let destinationVC = RedViewController()
         navigateToCommonPage(destinationVC: destinationVC, content: content)

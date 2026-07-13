@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol NetworkProtocol: AnyObject{
     func request<T: Decodable>(
@@ -29,39 +30,62 @@ final class NetworkManager: NetworkProtocol, Sendable{
     ){
         
         completion(.loading)
-        
-        guard let serverURL = URL(string: endpoint.basePath + apiKey) else{
-            print("Invalid URL")
+
+        guard var components = URLComponents(string: endpoint.basePath) else {
             completion(.failure(error: .invalidURL))
             return
         }
+
+        components.queryItems = endpoint.queryItems + [URLQueryItem(name: "api_key", value: apiKey)]
+
+        guard let serverURL = components.url else {
+            completion(.failure(error: .invalidURL))
+            return
+        }
+
+        AF.request(serverURL)
+            .validate()
+            .responseDecodable(of: T.self) { response in
+                switch response.result {
+                case .success(let movies):
+                    completion(.successful(data: movies))
+                case .failure(_):
+                    completion(.failure(error: .decodingError))
+                }
+            }
         
-        let urlRequest = URLRequest(url: serverURL)
-        
-        URLSession.shared.dataTask(with: urlRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("Error occured \(error!.localizedDescription)")
-                completion(.failure(error: .serverError))
-                return
-            }
-            
-            guard let data else {
-                print("No data from the server")
-                completion(.failure(error: .noData))
-                return
-            }
-            
-            do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.successful(data: decodedData))
-            }catch{
-                print("Error occurred: \(error)")
-                completion(.failure(error: .decodingError))
-            }
-            
-        }.resume()
+//        guard let serverURL = URL(string: endpoint.basePath + apiKey) else{
+//            print("Invalid URL")
+//            completion(.failure(error: .invalidURL))
+//            return
+//        }
+//        
+//        let urlRequest = URLRequest(url: serverURL)
+//        
+//        URLSession.shared.dataTask(with: urlRequest) {
+//            data, response, error in
+//            
+//            if error != nil {
+//                print("Error occured \(error!.localizedDescription)")
+//                completion(.failure(error: .serverError))
+//                return
+//            }
+//            
+//            guard let data else {
+//                print("No data from the server")
+//                completion(.failure(error: .noData))
+//                return
+//            }
+//            
+//            do {
+//                let decodedData = try JSONDecoder().decode(T.self, from: data)
+//                completion(.successful(data: decodedData))
+//            }catch{
+//                print("Error occurred: \(error)")
+//                completion(.failure(error: .decodingError))
+//            }
+//            
+//        }.resume()
     }
     
 }

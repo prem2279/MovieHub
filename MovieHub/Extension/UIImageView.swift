@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 extension UIImageView {
     
@@ -22,53 +23,58 @@ extension UIImageView {
             return
         }
         
-        if let cachedImage = ImageCache.shared.getImage(for: serverURL) {
-            print("Image Coming From Cache")
-            DispatchQueue.main.async {
-                [weak self] in
-                self?.image = cachedImage
-            }
-            return
-        }
+        self.sd_setImage(
+            with: serverURL,
+            placeholderImage: UIImage(systemName: defaultImage)
+        )
         
-        let urlRequest = URLRequest(url: serverURL)
-        
-        URLSession.shared.dataTask(with: urlRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("Error occured \(error!.localizedDescription)")
-                DispatchQueue.main.async {
-                    [weak self] in
-                    self?.image = UIImage(systemName: defaultImage)
-                }
-                return
-            }
-            
-            guard let data else {
-                print("No data from the server")
-                DispatchQueue.main.async {
-                    [weak self] in
-                    self?.image = UIImage(systemName: defaultImage)
-                }
-                return
-            }
-            
-            guard let image = UIImage(data: data) else {
-                print("Error Occoured while decoding the Image Data")
-                DispatchQueue.main.async {
-                    [weak self] in
-                    self?.image = UIImage(systemName: defaultImage)
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                [weak self] in
-                self?.image = image
-            }
-            ImageCache.shared.setImage(image, for: serverURL)
-            
-        }.resume()
+//        if let cachedImage = ImageCache.shared.getImage(for: serverURL) {
+//            print("Image Coming From Cache")
+//            DispatchQueue.main.async {
+//                [weak self] in
+//                self?.image = cachedImage
+//            }
+//            return
+//        }
+//        
+//        let urlRequest = URLRequest(url: serverURL)
+//        
+//        URLSession.shared.dataTask(with: urlRequest) {
+//            data, response, error in
+//            
+//            if error != nil {
+//                print("Error occured \(error!.localizedDescription)")
+//                DispatchQueue.main.async {
+//                    [weak self] in
+//                    self?.image = UIImage(systemName: defaultImage)
+//                }
+//                return
+//            }
+//            
+//            guard let data else {
+//                print("No data from the server")
+//                DispatchQueue.main.async {
+//                    [weak self] in
+//                    self?.image = UIImage(systemName: defaultImage)
+//                }
+//                return
+//            }
+//            
+//            guard let image = UIImage(data: data) else {
+//                print("Error Occoured while decoding the Image Data")
+//                DispatchQueue.main.async {
+//                    [weak self] in
+//                    self?.image = UIImage(systemName: defaultImage)
+//                }
+//                return
+//            }
+//            
+//            DispatchQueue.main.async {
+//                [weak self] in
+//                self?.image = image
+//            }
+//            ImageCache.shared.setImage(image, for: serverURL)
+//            
+//        }.resume()
     }
 }
